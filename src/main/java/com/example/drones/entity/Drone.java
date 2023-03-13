@@ -1,9 +1,14 @@
 package com.example.drones.entity;
 
+import java.util.Collection;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
 
 import com.example.drones.model.DroneModel;
 import com.example.drones.model.DroneState;
@@ -19,6 +24,9 @@ public class Drone {
 	private int weigthLimit;
 	private int batteryCapacity;
 	private DroneState state;
+	@ManyToMany
+    @JoinTable(name = "drone_medications", joinColumns = @JoinColumn(name = "drone_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "medication_id", referencedColumnName = "id"))
+	private Collection<Medication> medications;
 
 	public Drone() {
 	};
@@ -30,6 +38,14 @@ public class Drone {
 		this.weigthLimit = weightLimit;
 		this.batteryCapacity = batteryCapacity;
 		this.state = state;
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getSerial() {
@@ -70,6 +86,14 @@ public class Drone {
 
 	public void setState(DroneState state) {
 		this.state = state;
+	}
+
+	public Collection<Medication> getMedications() {
+		return medications;
+	}
+
+	public void setMedications(Collection<Medication> medications) {
+		this.medications = medications;
 	}
 
 }

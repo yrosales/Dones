@@ -3,6 +3,7 @@ package com.example.drones.service;
 import java.util.List;
 
 import com.example.drones.entity.Drone;
+import com.example.drones.entity.Medication;
 
 public interface DroneServiceInterface {
 	// Save operation
@@ -16,4 +17,16 @@ public interface DroneServiceInterface {
 
 	// Delete operation
 	void deleteDroneById(Long droneId);
+	
+	//loading a drone with medication items
+	Drone loadMedication(Long droneId, Long medicationId);
+	
+	//checking loaded medication items for a given drone
+	List<Medication> getLoadedMedications (Long droneId);
+	
+	// checking available drones for loading
+	List<Drone> getAvailableDrones();
+	
+	//check drone battery level for a given drone
+	int getBatteryLevel (Long droneId);
 }

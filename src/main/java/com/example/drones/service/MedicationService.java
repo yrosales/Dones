@@ -19,10 +19,12 @@ public class MedicationService implements MedicationServiceInterface {
 		return medicationRepository.save(medication);
 	}
 
+	@Override
 	public List<Medication> fetchMedicationList() {
 		return (List<Medication>) medicationRepository.findAll();
 	}
 
+	@Override
 	public Medication updateMedication(Medication newMedication, Long newMedicationId) {
 		Medication medication = medicationRepository.findById(newMedicationId).get();
 		medication.setName(newMedication.getName());
@@ -31,6 +33,7 @@ public class MedicationService implements MedicationServiceInterface {
 		return medicationRepository.save(medication);
 	}
 
+	@Override
 	public void deleteMedicationById(Long medicationId) {
 		medicationRepository.deleteById(medicationId);
 	}
