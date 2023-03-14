@@ -83,13 +83,17 @@ public class DroneService implements DroneServiceInterface {
 		return null;
 	}
 
+	/*
+	 * (non-Javadoc)
+	 * @see com.example.drones.service.DroneServiceInterface#getBatteryLevel(java.lang.Long)
+	 */
 	@Override
 	public int getBatteryLevel(Long droneId) {
 		Drone drone = droneRepository.findById(droneId).get();
 		return drone.getBatteryCapacity();
 	}
 
-	/**
+	/*
 	 * check if medication can be loaded
 	 * @param drone
 	 * @param medication
