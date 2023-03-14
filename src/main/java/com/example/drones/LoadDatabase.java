@@ -49,7 +49,7 @@ class LoadDatabase {
 		
 		//create drones (10)
 		List<Drone> drones = new ArrayList<Drone>();
-		drones.add(new Drone("102021", DroneModel.Cruiserweight, 100, 100, DroneState.LOADING));
+		drones.add(new Drone("102021", DroneModel.Cruiserweight, 150, 100, DroneState.LOADING));
 		drones.add(new Drone("102021", DroneModel.Lightweight, 100, 100, DroneState.IDLE));
 		drones.add(new Drone("102021", DroneModel.Heavyweight, 100, 100, DroneState.IDLE));
 		drones.add(new Drone("102021", DroneModel.Lightweight, 100, 100, DroneState.IDLE));
@@ -64,9 +64,6 @@ class LoadDatabase {
 		droneMedicatiosn.add(medications.get(0));
 		droneMedicatiosn.add(medications.get(2));
 		droneMedicatiosn.add(medications.get(4));
-		droneMedicatiosn.add(medications.get(5));
-		droneMedicatiosn.add(medications.get(7));
-		droneMedicatiosn.add(medications.get(8));
 		
 		drones.get(0).setMedications(droneMedicatiosn);
 

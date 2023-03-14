@@ -40,7 +40,7 @@ public class DroneService implements DroneServiceInterface {
 			actDrone.setWeigthLimit(drone.getWeigthLimit());
 			actDrone.setBatteryCapacity(drone.getBatteryCapacity());
 			actDrone.setState(drone.getState());
-			actDrone.setMedications(drone.getMedications());
+			actDrone.setMedications(actDrone.getMedications());
 			return droneRepository.save(actDrone);
 		}).orElseGet(() -> {
 			return droneRepository.save(drone);
@@ -59,8 +59,10 @@ public class DroneService implements DroneServiceInterface {
 		//prevent overload
 		if (!overload(drone,medication)) {
 			drone.getMedications().add(medication);
+		} else {
+			return null;
 		}
-		return updateDrone(drone, droneId);
+		return droneRepository.save(drone);
 	}
 
 	@Override

@@ -1,5 +1,6 @@
 package com.example.drones.entity;
 
+import java.util.ArrayList;
 import java.util.Collection;
 
 import javax.persistence.Entity;
@@ -12,6 +13,7 @@ import javax.persistence.ManyToMany;
 
 import com.example.drones.model.DroneModel;
 import com.example.drones.model.DroneState;
+import com.sun.istack.NotNull;
 
 @Entity
 public class Drone {
@@ -19,10 +21,15 @@ public class Drone {
 	@Id
 	@GeneratedValue(strategy = GenerationType.AUTO)
 	private Long id;
+	@NotNull
 	private String serial;
+	@NotNull
 	private DroneModel model;
+	@NotNull
 	private int weigthLimit;
+	@NotNull
 	private int batteryCapacity;
+	@NotNull
 	private DroneState state;
 	@ManyToMany
     @JoinTable(name = "drone_medications", joinColumns = @JoinColumn(name = "drone_id", referencedColumnName = "id"), inverseJoinColumns = @JoinColumn(name = "medication_id", referencedColumnName = "id"))
@@ -38,6 +45,7 @@ public class Drone {
 		this.weigthLimit = weightLimit;
 		this.batteryCapacity = batteryCapacity;
 		this.state = state;
+		this.medications = new ArrayList<Medication>();
 	}
 
 	public Long getId() {
