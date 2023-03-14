@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
 import com.example.drones.entity.Drone;
+import com.example.drones.entity.Medication;
 import com.example.drones.exception.OverLoadException;
 import com.example.drones.service.DroneService;
 
@@ -23,6 +24,16 @@ public class DroneController {
 	@GetMapping("/drones")
 	public List<Drone> fetchDroneList() {
 		return droneService.fetchDroneList();
+	}
+	
+	@GetMapping("/drones/battery-level/{id}")
+	public int getBatteryLevel(@PathVariable("id") Long droneId) {
+		return droneService.getBatteryLevel(droneId);
+	}
+	
+	@GetMapping("/drones/medications/{id}")
+	public List<Medication> fetchDroneMedicatiosnList(@PathVariable("id") Long droneId) {
+		return droneService.getLoadedMedications(droneId);
 	}
 
 	@PutMapping("/drones/{id}")
