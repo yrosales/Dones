@@ -81,11 +81,13 @@ public class DroneService implements DroneServiceInterface {
 		Medication medication = medicationRepository.findById(medicationId).get();
 		// prevent overload
 		if (!overload(drone, medication)) {
+			drone.setState(DroneState.LOADING);
 			drone.getMedications().add(medication);
+			return droneRepository.save(drone);
 		} else {
 			return null;
 		}
-		return droneRepository.save(drone);
+		
 	}
 
 	/**
@@ -114,7 +116,7 @@ public class DroneService implements DroneServiceInterface {
 				availableDrones.add(drone);
 			}
 		}
-		return null;
+		return availableDrones;
 	}
 
 	/**

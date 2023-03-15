@@ -47,18 +47,13 @@ class LoadDatabase {
 		medications.add(new Medication("Medication 19", 65, "CODE_M_19"));
 		medications.add(new Medication("Medication 20", 65, "CODE_M_20"));
 		
-		//create drones (10)
+		//create drones
 		List<Drone> drones = new ArrayList<Drone>();
 		drones.add(new Drone("102021", DroneModel.Cruiserweight, 150, 100, DroneState.LOADING));
-		drones.add(new Drone("102021", DroneModel.Lightweight, 100, 100, DroneState.IDLE));
-		drones.add(new Drone("102021", DroneModel.Heavyweight, 100, 100, DroneState.IDLE));
-		drones.add(new Drone("102021", DroneModel.Lightweight, 100, 100, DroneState.IDLE));
-		drones.add(new Drone("102021", DroneModel.Middleweight, 100, 100, DroneState.IDLE));
-		drones.add(new Drone("102021", DroneModel.Heavyweight, 100, 100, DroneState.IDLE));
-		drones.add(new Drone("102021", DroneModel.Middleweight, 100, 100, DroneState.IDLE));
-		drones.add(new Drone("102021", DroneModel.Lightweight, 100, 100, DroneState.IDLE));
-		drones.add(new Drone("102021", DroneModel.Middleweight, 100, 100, DroneState.IDLE));
-		drones.add(new Drone("102021", DroneModel.Heavyweight, 100, 100, DroneState.IDLE));
+		drones.add(new Drone("102022", DroneModel.Lightweight, 100, 100, DroneState.IDLE));
+		drones.add(new Drone("102023", DroneModel.Heavyweight, 500, 100, DroneState.IDLE));
+		drones.add(new Drone("102024", DroneModel.Lightweight, 100, 100, DroneState.IDLE));
+		drones.add(new Drone("102025", DroneModel.Middleweight, 200, 100, DroneState.IDLE));
 		
 		List<Medication> droneMedicatiosn = new ArrayList<>();
 		droneMedicatiosn.add(medications.get(0));
