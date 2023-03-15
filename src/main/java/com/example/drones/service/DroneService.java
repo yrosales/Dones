@@ -21,26 +21,38 @@ public class DroneService implements DroneServiceInterface {
 
 	@Autowired
 	private MedicationRepository medicationRepository;
-	
+
+	/**
+	 * save drone in bd
+	 */
 	@Override
 	public Drone saveDrone(Drone drone) {
 		return droneRepository.save(drone);
 	}
 
+	/**
+	 * get all drones list
+	 * @return drones
+	 */
 	@Override
 	public List<Drone> fetchDroneList() {
 		return (List<Drone>) droneRepository.findAll();
 	}
 
+	/**
+	 * update drone data
+	 * @param new drone data
+	 * @param droneId drone to update
+	 * @return update drone
+	 */
 	@Override
 	public Drone updateDrone(Drone drone, Long droneId) {
 		return droneRepository.findById(droneId).map(actDrone -> {
-			actDrone.setSerial(drone.getSerial());
-			actDrone.setModel(drone.getModel());
-			actDrone.setWeigthLimit(drone.getWeigthLimit());
-			actDrone.setBatteryCapacity(drone.getBatteryCapacity());
-			actDrone.setState(drone.getState());
-			actDrone.setMedications(actDrone.getMedications());
+			actDrone.setSerial(drone.getSerial() != null ? drone.getSerial() : actDrone.getSerial());
+			actDrone.setModel(drone.getModel() != null ? drone.getModel() : actDrone.getModel());
+			actDrone.setWeigthLimit(drone.getWeigthLimit() != null ? drone.getWeigthLimit() : actDrone.getWeigthLimit());
+			actDrone.setBatteryCapacity(drone.getBatteryCapacity() != null ? drone.getBatteryCapacity() : actDrone.getBatteryCapacity());
+			actDrone.setState(drone.getState()!= null ? drone.getState() : actDrone.getState());
 			return droneRepository.save(actDrone);
 		}).orElseGet(() -> {
 			return droneRepository.save(drone);
@@ -52,12 +64,19 @@ public class DroneService implements DroneServiceInterface {
 		droneRepository.deleteById(droneId);
 	}
 
+	/**
+	 * load a medication on a drone
+	 * 
+	 * @param droneId
+	 * @param medicationId
+	 * @return update drone
+	 */
 	@Override
 	public Drone loadMedication(Long droneId, Long medicationId) {
 		Drone drone = droneRepository.findById(droneId).get();
 		Medication medication = medicationRepository.findById(medicationId).get();
-		//prevent overload
-		if (!overload(drone,medication)) {
+		// prevent overload
+		if (!overload(drone, medication)) {
 			drone.getMedications().add(medication);
 		} else {
 			return null;
@@ -65,12 +84,23 @@ public class DroneService implements DroneServiceInterface {
 		return droneRepository.save(drone);
 	}
 
+	/**
+	 * get medications loaded in a drone
+	 * 
+	 * @param droneId
+	 * @return medications loaded or null if there is not
+	 */
 	@Override
 	public List<Medication> getLoadedMedications(Long droneId) {
 		Drone drone = droneRepository.findById(droneId).get();
 		return new ArrayList<Medication>(drone.getMedications());
 	}
 
+	/**
+	 * get the available drones to load with medications
+	 * 
+	 * @return available drones
+	 */
 	@Override
 	public List<Drone> getAvailableDrones() {
 		List<Drone> drones = fetchDroneList();
@@ -83,9 +113,11 @@ public class DroneService implements DroneServiceInterface {
 		return null;
 	}
 
-	/*
-	 * (non-Javadoc)
-	 * @see com.example.drones.service.DroneServiceInterface#getBatteryLevel(java.lang.Long)
+	/**
+	 * get the drone´s battery level
+	 * 
+	 * @param droneId
+	 * @return battery level
 	 */
 	@Override
 	public int getBatteryLevel(Long droneId) {
@@ -93,8 +125,9 @@ public class DroneService implements DroneServiceInterface {
 		return drone.getBatteryCapacity();
 	}
 
-	/*
+	/**
 	 * check if medication can be loaded
+	 * 
 	 * @param drone
 	 * @param medication
 	 * @return true if the load does not exceed the drone's weight limit
@@ -105,5 +138,17 @@ public class DroneService implements DroneServiceInterface {
 			loadedWeigth += loadMedication.getWeight();
 		}
 		return loadedWeigth > drone.getWeigthLimit();
+	}
+
+	/**
+	 * update the drone´s state
+	 * 
+	 * @param droneState
+	 * @param droneId
+	 */
+	@Override
+	public void updateDroneState(DroneState droneState, Long droneId) {
+		Drone drone = droneRepository.findById(droneId).get();
+		drone.setState(droneState);
 	}
 }
