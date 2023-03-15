@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.example.drones.entity.Drone;
 import com.example.drones.entity.Medication;
+import com.example.drones.model.DroneState;
 
 public interface DroneServiceInterface {
 	// Save operation
@@ -29,4 +30,7 @@ public interface DroneServiceInterface {
 	
 	//check drone battery level for a given drone
 	int getBatteryLevel (Long droneId);
+	
+	//update drone state
+	Drone updateDroneState (DroneState droneState, Long droneId);
 }

@@ -26,9 +26,9 @@ public class Drone {
 	@NotNull
 	private DroneModel model;
 	@NotNull
-	private int weigthLimit;
+	private Integer weigthLimit;
 	@NotNull
-	private int batteryCapacity;
+	private Integer batteryCapacity;
 	@NotNull
 	private DroneState state;
 	@ManyToMany
@@ -72,7 +72,7 @@ public class Drone {
 		this.model = model;
 	}
 
-	public int getWeigthLimit() {
+	public Integer getWeigthLimit() {
 		return weigthLimit;
 	}
 
@@ -80,7 +80,7 @@ public class Drone {
 		this.weigthLimit = weigthLimit;
 	}
 
-	public int getBatteryCapacity() {
+	public Integer getBatteryCapacity() {
 		return batteryCapacity;
 	}
 
