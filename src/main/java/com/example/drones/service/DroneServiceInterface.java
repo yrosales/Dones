@@ -32,5 +32,5 @@ public interface DroneServiceInterface {
 	int getBatteryLevel (Long droneId);
 	
 	//update drone state
-	void updateDroneState (DroneState droneState, Long droneId);
+	Drone updateDroneState (DroneState droneState, Long droneId);
 }

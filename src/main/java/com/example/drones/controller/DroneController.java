@@ -7,8 +7,10 @@ import org.springframework.web.bind.annotation.*;
 
 import com.example.drones.entity.Drone;
 import com.example.drones.entity.Medication;
+import com.example.drones.exception.LowLevelException;
 import com.example.drones.exception.OverLoadException;
 import com.example.drones.model.DroneState;
+import com.example.drones.model.StateRequest;
 import com.example.drones.service.DroneService;
 
 @RestController
@@ -59,5 +61,13 @@ public class DroneController {
 	public String deleteDroneById(@PathVariable("id") Long droneId) {
 		droneService.deleteDroneById(droneId);
 		return "Deleted Successfully";
+	}
+	
+	@PutMapping("/drones/state/{id}")
+	public Drone updateDroneState(@RequestBody StateRequest droneState, @PathVariable("id") Long droneId) {
+		Drone drone = droneService.updateDroneState(DroneState.valueOf(droneState.getState()), droneId);
+		if  (drone!=null) {
+			return drone;
+		} else throw new LowLevelException(droneId);
 	}
 }

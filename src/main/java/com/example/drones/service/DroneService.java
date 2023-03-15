@@ -32,6 +32,7 @@ public class DroneService implements DroneServiceInterface {
 
 	/**
 	 * get all drones list
+	 * 
 	 * @return drones
 	 */
 	@Override
@@ -41,7 +42,8 @@ public class DroneService implements DroneServiceInterface {
 
 	/**
 	 * update drone data
-	 * @param new drone data
+	 * 
+	 * @param         new drone data
 	 * @param droneId drone to update
 	 * @return update drone
 	 */
@@ -50,9 +52,11 @@ public class DroneService implements DroneServiceInterface {
 		return droneRepository.findById(droneId).map(actDrone -> {
 			actDrone.setSerial(drone.getSerial() != null ? drone.getSerial() : actDrone.getSerial());
 			actDrone.setModel(drone.getModel() != null ? drone.getModel() : actDrone.getModel());
-			actDrone.setWeigthLimit(drone.getWeigthLimit() != null ? drone.getWeigthLimit() : actDrone.getWeigthLimit());
-			actDrone.setBatteryCapacity(drone.getBatteryCapacity() != null ? drone.getBatteryCapacity() : actDrone.getBatteryCapacity());
-			actDrone.setState(drone.getState()!= null ? drone.getState() : actDrone.getState());
+			actDrone.setWeigthLimit(
+					drone.getWeigthLimit() != null ? drone.getWeigthLimit() : actDrone.getWeigthLimit());
+			actDrone.setBatteryCapacity(
+					drone.getBatteryCapacity() != null ? drone.getBatteryCapacity() : actDrone.getBatteryCapacity());
+			actDrone.setState(drone.getState() != null ? drone.getState() : actDrone.getState());
 			return droneRepository.save(actDrone);
 		}).orElseGet(() -> {
 			return droneRepository.save(drone);
@@ -147,8 +151,24 @@ public class DroneService implements DroneServiceInterface {
 	 * @param droneId
 	 */
 	@Override
-	public void updateDroneState(DroneState droneState, Long droneId) {
+	public Drone updateDroneState(DroneState droneState, Long droneId) {
 		Drone drone = droneRepository.findById(droneId).get();
-		drone.setState(droneState);
+		if (droneState == DroneState.LOADING && lowLevel(drone) ){
+			return null;
+		} else {
+			drone.setState(droneState);
+			return droneRepository.save(drone);
+		}
+	}
+	
+	/**
+	 * check if drone have low battery charge (<25%)
+	 * 
+	 * @param drone
+	 * @param medication
+	 * @return true if the load does not exceed the drone's weight limit
+	 */
+	private boolean lowLevel(Drone drone) {
+		return drone.getBatteryCapacity() < 25;
 	}
 }
